@@ -20,7 +20,6 @@ function Register() {
     country: "India",
 
     governmentIdType: "",
-    governmentIdNumber: "",
   });
 
   const [idDocument, setIdDocument] = useState(null);
@@ -41,7 +40,7 @@ function Register() {
   };
 
   /* =========================================
-     STEP 1 VALIDATION
+     STEP 1 - PERSONAL DETAILS
   ========================================= */
 
   const handlePersonalNext = (event) => {
@@ -80,7 +79,7 @@ function Register() {
   };
 
   /* =========================================
-     STEP 2 VALIDATION
+     STEP 2 - ADDRESS
   ========================================= */
 
   const handleAddressNext = (event) => {
@@ -108,26 +107,6 @@ function Register() {
   };
 
   /* =========================================
-     STEP 3 VALIDATION
-  ========================================= */
-
-  const handleIdNext = (event) => {
-    event.preventDefault();
-
-    if (!formData.governmentIdType) {
-      alert("Please select a Government ID type.");
-      return;
-    }
-
-    if (!formData.governmentIdNumber.trim()) {
-      alert("Please enter your Government ID number.");
-      return;
-    }
-
-    setCurrentStep(4);
-  };
-
-  /* =========================================
      PREVIOUS BUTTONS
   ========================================= */
 
@@ -137,10 +116,6 @@ function Register() {
 
   const handleBackToAddress = () => {
     setCurrentStep(2);
-  };
-
-  const handleBackToId = () => {
-    setCurrentStep(3);
   };
 
   /* =========================================
@@ -161,13 +136,10 @@ function Register() {
     ];
 
     if (!allowedTypes.includes(file.type)) {
-      alert(
-        "Please upload only JPG, JPEG, PNG or PDF files."
-      );
+      alert("Please upload only JPG, JPEG, PNG or PDF files.");
 
       event.target.value = "";
       setIdDocument(null);
-
       return;
     }
 
@@ -178,7 +150,6 @@ function Register() {
 
       event.target.value = "";
       setIdDocument(null);
-
       return;
     }
 
@@ -186,11 +157,16 @@ function Register() {
   };
 
   /* =========================================
-     FINAL SUBMISSION
+     FINAL SUBMISSION - STEP 3
   ========================================= */
 
   const handleSubmitRegistration = (event) => {
     event.preventDefault();
+
+    if (!formData.governmentIdType) {
+      alert("Please select a Government ID type.");
+      return;
+    }
 
     if (!idDocument) {
       alert("Please upload your Government ID document.");
@@ -198,9 +174,7 @@ function Register() {
     }
 
     if (!declarationAccepted) {
-      alert(
-        "Please accept the declaration before submitting."
-      );
+      alert("Please accept the declaration before submitting.");
       return;
     }
 
@@ -221,25 +195,18 @@ function Register() {
   return (
     <div className="registration-page">
 
-      {/* =====================================
-          LEFT SIDE
-      ===================================== */}
+      {/* ================= LEFT SIDE ================= */}
 
       <div className="registration-left">
 
         <Link to="/" className="registration-logo">
-
           <span>🌿</span>
 
           <div>
             <strong>CarbonTrack</strong>
-            <small>
-              Carbon Footprint Monitoring
-            </small>
+            <small>Carbon Footprint Monitoring</small>
           </div>
-
         </Link>
-
 
         <div className="registration-left-content">
 
@@ -258,7 +225,6 @@ function Register() {
             your environmental impact and develop more
             sustainable habits.
           </p>
-
 
           <div className="registration-benefits">
 
@@ -281,28 +247,21 @@ function Register() {
 
         </div>
 
-
         <p className="registration-left-footer">
           Small choices. Meaningful impact.
         </p>
 
       </div>
 
-
-      {/* =====================================
-          RIGHT SIDE
-      ===================================== */}
+      {/* ================= RIGHT SIDE ================= */}
 
       <div className="registration-right">
 
         <div className="registration-form-wrapper">
 
-
-          {/* =================================
-              SUCCESS SCREEN
-          ================================= */}
-
           {registrationComplete ? (
+
+            /* ================= SUCCESS ================= */
 
             <div className="registration-success">
 
@@ -314,9 +273,7 @@ function Register() {
                 REGISTRATION SUBMITTED
               </p>
 
-              <h2>
-                Registration Successful!
-              </h2>
+              <h2>Registration Successful!</h2>
 
               <p>
                 Your CarbonTrack registration has been
@@ -340,10 +297,7 @@ function Register() {
           ) : (
 
             <>
-
-              {/* =================================
-                  HEADING
-              ================================= */}
+              {/* ================= HEADING ================= */}
 
               <div className="registration-heading">
 
@@ -360,10 +314,7 @@ function Register() {
 
               </div>
 
-
-              {/* =================================
-                  PROGRESS BAR
-              ================================= */}
+              {/* ================= 3-STEP PROGRESS ================= */}
 
               <div className="registration-progress">
 
@@ -372,75 +323,46 @@ function Register() {
                     currentStep >= 1 ? "active" : ""
                   }`}
                 >
-
                   <div className="step-circle">
                     {currentStep > 1 ? "✓" : "1"}
                   </div>
 
                   <span>Personal</span>
-
                 </div>
 
-
                 <div className="step-line"></div>
-
 
                 <div
                   className={`progress-step ${
                     currentStep >= 2 ? "active" : ""
                   }`}
                 >
-
                   <div className="step-circle">
                     {currentStep > 2 ? "✓" : "2"}
                   </div>
 
                   <span>Address</span>
-
                 </div>
 
-
                 <div className="step-line"></div>
-
 
                 <div
                   className={`progress-step ${
                     currentStep >= 3 ? "active" : ""
                   }`}
                 >
-
                   <div className="step-circle">
-                    {currentStep > 3 ? "✓" : "3"}
+                    3
                   </div>
 
                   <span>ID Details</span>
-
-                </div>
-
-
-                <div className="step-line"></div>
-
-
-                <div
-                  className={`progress-step ${
-                    currentStep >= 4 ? "active" : ""
-                  }`}
-                >
-
-                  <div className="step-circle">
-                    4
-                  </div>
-
-                  <span>Upload</span>
-
                 </div>
 
               </div>
 
-
-              {/* =================================
-                  STEP 1
-              ================================= */}
+              {/* =================================================
+                  STEP 1 - PERSONAL DETAILS
+              ================================================= */}
 
               {currentStep === 1 && (
 
@@ -454,7 +376,6 @@ function Register() {
 
                     <div>
                       <h3>Personal Details</h3>
-
                       <p>
                         Enter your basic account information.
                       </p>
@@ -462,6 +383,7 @@ function Register() {
 
                   </div>
 
+                  {/* FIRST + LAST NAME */}
 
                   <div className="registration-form-row">
 
@@ -483,7 +405,6 @@ function Register() {
 
                     </div>
 
-
                     <div className="registration-form-group">
 
                       <label htmlFor="lastName">
@@ -504,45 +425,50 @@ function Register() {
 
                   </div>
 
+                  {/* EMAIL + MOBILE - SAME ROW */}
 
-                  <div className="registration-form-group">
+                  <div className="registration-form-row">
 
-                    <label htmlFor="email">
-                      Email Address <span>*</span>
-                    </label>
+                    <div className="registration-form-group">
 
-                    <input
-                      id="email"
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="example@email.com"
-                      required
-                    />
+                      <label htmlFor="email">
+                        Email Address <span>*</span>
+                      </label>
+
+                      <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="example@email.com"
+                        required
+                      />
+
+                    </div>
+
+                    <div className="registration-form-group">
+
+                      <label htmlFor="mobileNumber">
+                        Mobile Number <span>*</span>
+                      </label>
+
+                      <input
+                        id="mobileNumber"
+                        type="tel"
+                        name="mobileNumber"
+                        value={formData.mobileNumber}
+                        onChange={handleChange}
+                        placeholder="Enter 10-digit mobile number"
+                        maxLength="10"
+                        required
+                      />
+
+                    </div>
 
                   </div>
 
-
-                  <div className="registration-form-group">
-
-                    <label htmlFor="mobileNumber">
-                      Mobile Number <span>*</span>
-                    </label>
-
-                    <input
-                      id="mobileNumber"
-                      type="tel"
-                      name="mobileNumber"
-                      value={formData.mobileNumber}
-                      onChange={handleChange}
-                      placeholder="Enter 10-digit mobile number"
-                      maxLength="10"
-                      required
-                    />
-
-                  </div>
-
+                  {/* PASSWORD + CONFIRM PASSWORD */}
 
                   <div className="registration-form-row">
 
@@ -564,7 +490,6 @@ function Register() {
 
                     </div>
 
-
                     <div className="registration-form-group">
 
                       <label htmlFor="confirmPassword">
@@ -584,7 +509,6 @@ function Register() {
                     </div>
 
                   </div>
-
 
                   <div className="registration-form-actions">
 
@@ -609,10 +533,9 @@ function Register() {
 
               )}
 
-
-              {/* =================================
-                  STEP 2
-              ================================= */}
+              {/* =================================================
+                  STEP 2 - ADDRESS
+              ================================================= */}
 
               {currentStep === 2 && (
 
@@ -628,13 +551,11 @@ function Register() {
                       <h3>Address Details</h3>
 
                       <p>
-                        Enter your current residential
-                        address.
+                        Enter your current residential address.
                       </p>
                     </div>
 
                   </div>
-
 
                   <div className="registration-form-group">
 
@@ -653,7 +574,6 @@ function Register() {
                     />
 
                   </div>
-
 
                   <div className="registration-form-row">
 
@@ -675,7 +595,6 @@ function Register() {
 
                     </div>
 
-
                     <div className="registration-form-group">
 
                       <label htmlFor="state">
@@ -695,7 +614,6 @@ function Register() {
                     </div>
 
                   </div>
-
 
                   <div className="registration-form-row">
 
@@ -717,7 +635,6 @@ function Register() {
                       />
 
                     </div>
-
 
                     <div className="registration-form-group">
 
@@ -747,7 +664,6 @@ function Register() {
 
                   </div>
 
-
                   <div className="registration-form-actions">
 
                     <button
@@ -772,14 +688,13 @@ function Register() {
 
               )}
 
-
-              {/* =================================
-                  STEP 3
-              ================================= */}
+              {/* =================================================
+                  STEP 3 - ID DETAILS + DOCUMENT UPLOAD
+              ================================================= */}
 
               {currentStep === 3 && (
 
-                <form onSubmit={handleIdNext}>
+                <form onSubmit={handleSubmitRegistration}>
 
                   <div className="registration-section-title">
 
@@ -788,18 +703,17 @@ function Register() {
                     </div>
 
                     <div>
-                      <h3>
-                        Government ID Details
-                      </h3>
+                      <h3>Government ID Details</h3>
 
                       <p>
-                        Provide your government-issued
-                        identification details.
+                        Select and upload your government-issued
+                        identification document.
                       </p>
                     </div>
 
                   </div>
 
+                  {/* ID TYPE */}
 
                   <div className="registration-form-group">
 
@@ -843,100 +757,18 @@ function Register() {
 
                   </div>
 
-
-                  <div className="registration-form-group">
-
-                    <label htmlFor="governmentIdNumber">
-                      Government ID Number <span>*</span>
-                    </label>
-
-                    <input
-                      id="governmentIdNumber"
-                      type="text"
-                      name="governmentIdNumber"
-                      value={formData.governmentIdNumber}
-                      onChange={handleChange}
-                      placeholder="Enter ID number"
-                      required
-                    />
-
-                  </div>
-
-
                   <div className="registration-id-note">
 
                     <span>🔒</span>
 
                     <p>
-                      Your identification details are
-                      collected only for registration
-                      verification.
+                      Your identification document is collected
+                      only for registration verification.
                     </p>
 
                   </div>
 
-
-                  <div className="registration-form-actions">
-
-                    <button
-                      type="button"
-                      className="registration-back-home"
-                      onClick={handleBackToAddress}
-                    >
-                      ← Previous
-                    </button>
-
-                    <button
-                      type="submit"
-                      className="registration-next-btn"
-                    >
-                      Continue to Upload
-                      <span>→</span>
-                    </button>
-
-                  </div>
-
-                </form>
-
-              )}
-
-
-              {/* =================================
-                  STEP 4
-              ================================= */}
-
-              {currentStep === 4 && (
-
-                <form onSubmit={handleSubmitRegistration}>
-
-                  <div className="registration-section-title">
-
-                    <div>
-                      <span>04</span>
-                    </div>
-
-                    <div>
-                      <h3>Upload Document</h3>
-
-                      <p>
-                        Upload a clear copy of your selected
-                        Government ID.
-                      </p>
-                    </div>
-
-                  </div>
-
-
-                  <div className="selected-id-information">
-
-                    <span>Selected ID</span>
-
-                    <strong>
-                      {formData.governmentIdType}
-                    </strong>
-
-                  </div>
-
+                  {/* DOCUMENT UPLOAD */}
 
                   <div className="registration-form-group">
 
@@ -944,7 +776,6 @@ function Register() {
                       Government ID Document
                       <span> *</span>
                     </label>
-
 
                     <div className="document-upload-box">
 
@@ -964,14 +795,12 @@ function Register() {
                         Maximum size: 5 MB
                       </p>
 
-
                       <label
                         htmlFor="idDocument"
                         className="choose-file-button"
                       >
                         Choose File
                       </label>
-
 
                       <input
                         id="idDocument"
@@ -985,6 +814,7 @@ function Register() {
 
                   </div>
 
+                  {/* SELECTED FILE */}
 
                   {idDocument && (
 
@@ -1015,6 +845,7 @@ function Register() {
 
                   )}
 
+                  {/* DECLARATION */}
 
                   <label className="registration-declaration">
 
@@ -1036,13 +867,12 @@ function Register() {
 
                   </label>
 
-
                   <div className="registration-form-actions">
 
                     <button
                       type="button"
                       className="registration-back-home"
-                      onClick={handleBackToId}
+                      onClick={handleBackToAddress}
                     >
                       ← Previous
                     </button>
