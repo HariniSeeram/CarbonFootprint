@@ -4,29 +4,39 @@ function Header() {
   return (
     <header className="header">
 
-      <a href="#home" className="brand">
+      <div className="header-container">
 
-        <div className="brand-logo">
-          🌿
+        <a href="#home" className="logo">
+
+          <div className="logo-icon">🌿</div>
+
+          <div className="logo-text">
+            <strong>CarbonTrack</strong>
+            <small>Carbon Footprint Monitoring</small>
+          </div>
+
+        </a>
+
+        <nav className="nav">
+          <a href="#home">Home</a>
+          <a href="#about">About Us</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact Us</a>
+        </nav>
+
+        <div className="header-buttons">
+
+          <Link to="/login" className="header-login">
+            Login
+          </Link>
+
+          <Link to="/register" className="header-register-btn">
+            Register
+          </Link>
+
         </div>
 
-        <div className="brand-name">
-          <strong>CarbonTrack</strong>
-          <span>Carbon Footprint Monitoring</span>
-        </div>
-
-      </a>
-
-      <nav className="navbar">
-        <a href="#home">Home</a>
-        <a href="#about">About Us</a>
-        <a href="#services">Services</a>
-        <a href="#contact">Contact Us</a>
-      </nav>
-
-      <a href="/register" className="header-register">
-        Register
-      </a>
+      </div>
 
     </header>
   );
